@@ -26,7 +26,7 @@ class Articles extends React.Component{
         .then(response=>response.json())
         .then(response=>{
             const articles=response
-            console.log(articles)
+            // console.log(articles)
             const data=articles['data']
             this.setState({articles,data})
         })
