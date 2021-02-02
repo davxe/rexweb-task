@@ -1,10 +1,9 @@
 import React from 'react'
-import axios from 'axios'
 class Articles extends React.Component{
     constructor(){
         super()
         this.state={
-            pageNo:0,
+            pageNo:1,
             articles:{},
             data:[],
             totalPage:[1,2,3,4,5]
@@ -12,10 +11,22 @@ class Articles extends React.Component{
     }
     handleClick=(e)=>{
         const pageNo=e
-        this.setState({pageNo})
-        axios.get(`https://jsonmock.hackerrank.com/api/articles?page=${this.state.pageNo}`)
+        fetch(`https://jsonmock.hackerrank.com/api/articles?page=${pageNo}`)
+        .then(response=>response.json())
         .then(response=>{
-            const articles=response.data
+            const articles=response
+            // console.log(articles)
+            const data=articles['data']
+            this.setState({articles,data})
+        })
+        .catch((err)=>console.log(err))
+    }
+    componentDidMount(){
+        fetch(`https://jsonmock.hackerrank.com/api/articles?page=${this.state.pageNo}`)
+        .then(response=>response.json())
+        .then(response=>{
+            const articles=response
+            console.log(articles)
             const data=articles['data']
             this.setState({articles,data})
         })
